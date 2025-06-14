@@ -12,7 +12,6 @@ import {
 import { ReferralService } from './referral.service';
 import { CreateReferralDto } from './dto/referral/create-referral.dto';
 import { UpdateReferralDto } from './dto/referral/update-referral.dto';
-import { CreateCommentDto } from './dto/comment/create-comment.dto';
 
 @Controller('referral')
 export class ReferralController {
@@ -76,14 +75,12 @@ export class ReferralController {
     }
   }
 
-  @Post(':id/comments')
-  @HttpCode(201)
-  async addComment(
-    @Param('id') id: string,
-    @Body() createCommentDto: CreateCommentDto,
-  ) {
-    return this.referralService.addComment(id, createCommentDto);
-  }
-
-  // TODO: Delete comment
+  // @Post(':id/comments')
+  // @HttpCode(201)
+  // async addComment(
+  //   @Param('id') id: string,
+  //   @Body() createCommentDto: CreateCommentDto,
+  // ) {
+  //   return this.referralService.addComment(id, createCommentDto);
+  // }
 }
