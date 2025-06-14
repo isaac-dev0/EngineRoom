@@ -4,6 +4,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Referral } from '../../referral/entity/referral.entity';
 
@@ -24,7 +25,7 @@ export class Comment {
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 
-  @ManyToOne(() => Referral, (referral) => referral.comments, {
+  @ManyToOne(() => Referral, (referral) => referral.id, {
     onDelete: 'CASCADE',
     nullable: false,
   })
