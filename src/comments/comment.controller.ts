@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   HttpCode,
   NotFoundException,
@@ -25,5 +26,14 @@ export class CommentController {
       throw new NotFoundException(`Comment with ID ${commentId} not found.`);
     }
     return comment;
+  }
+
+  @Delete(':commentId')
+  @HttpCode(204)
+  async delete(@Param('commentId') commentId: string) {
+    const isDeleted = await this.commentService.delete(commentId);
+    if (!isDeleted) {
+      throw new NotFoundException(`Comment with ID ${commentId} not found.`);
+    }
   }
 }
