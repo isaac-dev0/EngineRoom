@@ -21,10 +21,10 @@ export class Comment {
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: string;
 
-  @ManyToOne(() => Referral, (referral) => referral.id, {
+  @ManyToOne(() => Referral, (referral) => referral.comments, {
     onDelete: 'CASCADE',
     nullable: false,
   })

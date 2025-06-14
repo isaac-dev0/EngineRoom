@@ -67,6 +67,6 @@ export class CommentService {
 
   async delete(commentId: string): Promise<boolean> {
     const result = await this.commentRepository.delete(commentId);
-    return result.affected!! > 0;
+    return result.affected! > 0;
   }
 }
