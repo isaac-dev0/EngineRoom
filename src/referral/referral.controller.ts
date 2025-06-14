@@ -23,7 +23,11 @@ export class ReferralController {
     return this.referralService.findAll();
   }
 
-  // TODO: findAllByReferee
+  @Get()
+  @HttpCode(200)
+  async findAllByReferee(refereeId: string) {
+    return this.referralService.findAllByReferee(refereeId);
+  }
 
   @Get(':id')
   @HttpCode(200)
@@ -59,7 +63,10 @@ export class ReferralController {
     @Param('id') id: string,
     @Body() updateReferralDto: UpdateReferralDto,
   ) {
-    const updatedReferral = await this.referralService.update(id, updateReferralDto);
+    const updatedReferral = await this.referralService.update(
+      id,
+      updateReferralDto,
+    );
     if (!updatedReferral) {
       throw new NotFoundException(`Referral with ID ${id} not found.`);
     }
@@ -74,13 +81,4 @@ export class ReferralController {
       throw new NotFoundException(`Referral with ID ${id} not found.`);
     }
   }
-
-  // @Post(':id/comments')
-  // @HttpCode(201)
-  // async addComment(
-  //   @Param('id') id: string,
-  //   @Body() createCommentDto: CreateCommentDto,
-  // ) {
-  //   return this.referralService.addComment(id, createCommentDto);
-  // }
 }

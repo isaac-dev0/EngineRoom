@@ -22,7 +22,9 @@ export class ReferralService {
     return this.referralRepository.find();
   }
 
-  // TODO: findAllByReferee(refereeId: string): Array<Referral> { }
+  async findAllByReferee(refereeId: string): Promise<Array<Referral>> {
+    return this.referralRepository.find({ where: { refereeId: refereeId } });
+  }
 
   async findOne(id: string): Promise<Referral | null> {
     return this.referralRepository.findOne({ where: { id } });
@@ -96,28 +98,4 @@ export class ReferralService {
     const result = await this.referralRepository.delete(id);
     return result.affected!! > 0;
   }
-
-  // async addComment(
-  //   referralId: string,
-  //   createCommentDto: CreateCommentDto,
-  // ): Promise<Comment> {
-  //   const referral = await this.referralRepository.findOne({
-  //     where: { id: referralId },
-  //   });
-  //   if (!referral) {
-  //     throw new NotFoundException(`Referral with ID ${referralId} not found.`);
-  //   }
-
-  //   const newComment = this.commentRepository.create({
-  //     authorId: createCommentDto.authorId,
-  //     content: createCommentDto.content,
-  //     referral: referral,
-  //   });
-
-  //   const savedComment = await this.commentRepository.save(newComment);
-
-  //   return savedComment;
-  // }
-
-  // TODO: updateComment(id: string, updateCommentDto: UpdateCommentDto): ReferralComment {}
 }
