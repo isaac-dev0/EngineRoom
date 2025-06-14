@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { generateReference } from 'src/common/generateReference';
 import { CreateReferralDto } from './dto/referral/create-referral.dto';
 import { ReferralStatus } from './model/enums/ReferralStatus.enum';
 import { UpdateReferralDto } from './dto/referral/update-referral.dto';
-import { CreateCommentDto } from './dto/comment/create-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Referral } from './entity/referral.entity';
 import { Repository } from 'typeorm';
@@ -14,9 +13,6 @@ export class ReferralService {
   constructor(
     @InjectRepository(Referral)
     private referralRepository: Repository<Referral>,
-
-    @InjectRepository(Comment)
-    private commentRepository: Repository<Comment>,
 
     @InjectRepository(ReferralDetails)
     private referralDetailsRepository: Repository<ReferralDetails>,

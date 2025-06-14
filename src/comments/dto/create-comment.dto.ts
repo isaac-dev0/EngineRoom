@@ -9,4 +9,8 @@ export class CreateCommentDto {
   @IsString()
   @Length(0, 1024)
   content: string;
+
+  @IsNotEmpty()
+  @IsString()
+  referralId: string;
 }
