@@ -1,21 +1,33 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Comment } from 'src/referral/entity/comment.entity';
+import { ReferralDetails } from 'src/referral/entity/referral-details.entity';
+import { Referral } from 'src/referral/entity/referral.entity';
+import { ConfigModule } from '../config/config.module';
+import { ConfigService } from '../config/config.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'engine_room',
-      entities: [],
-      synchronize: true, // TODO: Disable in PROD!
-      logging: false,
+    ConfigModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        const dbConfig = configService.getDatabaseConfig();
+        return {
+          type: 'postgres',
+          host: dbConfig.host,
+          port: dbConfig.port,
+          username: dbConfig.username,
+          password: dbConfig.password,
+          database: dbConfig.database,
+          entities: [Referral, Comment, ReferralDetails],
+          synchronize: true, // TODO: Disable in PROD!
+          logging: ['query', 'error'],
+        };
+      },
+      inject: [ConfigService],
     }),
   ],
-  controllers: [],
-  providers: [],
+  exports: [TypeOrmModule],
 })
 export class DatabaseModule {}

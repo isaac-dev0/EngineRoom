@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ReferralController } from './referral.controller';
 
-describe('ControllerController', () => {
+describe('ReferralController', () => {
   let controller: ReferralController;
 
   beforeEach(async () => {

@@ -2,14 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ReferralDetails } from './referral-details.entity';
 import { ReferralStatus } from '../model/enums/ReferralStatus.enum';
-import { Comment } from './comment.entity';
 
 @Entity('referrals')
 export class Referral {
@@ -34,12 +32,6 @@ export class Referral {
     default: ReferralStatus.PENDING,
   })
   status: ReferralStatus;
-
-  @OneToMany(() => Comment, (comment) => comment.referral, {
-    cascade: true,
-    eager: true,
-  })
-  comments: Array<Comment>;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;

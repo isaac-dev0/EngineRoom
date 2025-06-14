@@ -1,15 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { generateReference } from 'src/common/generateReference';
 import { CreateReferralDto } from './dto/referral/create-referral.dto';
-import { randomUUID } from 'crypto';
 import { ReferralStatus } from './model/enums/ReferralStatus.enum';
 import { UpdateReferralDto } from './dto/referral/update-referral.dto';
 import { CreateCommentDto } from './dto/comment/create-comment.dto';
-import { UpdateCommentDto } from './dto/comment/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Referral } from './entity/referral.entity';
 import { Repository } from 'typeorm';
-import { Comment } from './entity/comment.entity';
 import { ReferralDetails } from './entity/referral-details.entity';
 
 @Injectable()
@@ -53,7 +50,6 @@ export class ReferralService {
       reference: generateReference(),
       status: ReferralStatus.PENDING,
       details: newDetails,
-      comments: [],
     });
 
     return this.referralRepository.save(newReferral);
@@ -102,30 +98,30 @@ export class ReferralService {
 
   async delete(id: string): Promise<boolean> {
     const result = await this.referralRepository.delete(id);
-    return result.affected > 0;
+    return result.affected!! > 0;
   }
 
-  async addComment(
-    referralId: string,
-    createCommentDto: CreateCommentDto,
-  ): Promise<Comment> {
-    const referral = await this.referralRepository.findOne({
-      where: { id: referralId },
-    });
-    if (!referral) {
-      throw new NotFoundException(`Referral with ID ${referralId} not found.`);
-    }
+  // async addComment(
+  //   referralId: string,
+  //   createCommentDto: CreateCommentDto,
+  // ): Promise<Comment> {
+  //   const referral = await this.referralRepository.findOne({
+  //     where: { id: referralId },
+  //   });
+  //   if (!referral) {
+  //     throw new NotFoundException(`Referral with ID ${referralId} not found.`);
+  //   }
 
-    const newComment = this.commentRepository.create({
-      authorId: createCommentDto.authorId,
-      content: createCommentDto.content,
-      referral: referral,
-    });
+  //   const newComment = this.commentRepository.create({
+  //     authorId: createCommentDto.authorId,
+  //     content: createCommentDto.content,
+  //     referral: referral,
+  //   });
 
-    const savedComment = await this.commentRepository.save(newComment);
+  //   const savedComment = await this.commentRepository.save(newComment);
 
-    return savedComment;
-  }
+  //   return savedComment;
+  // }
 
   // TODO: updateComment(id: string, updateCommentDto: UpdateCommentDto): ReferralComment {}
 }
