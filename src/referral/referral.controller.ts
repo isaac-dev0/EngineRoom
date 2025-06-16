@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -18,19 +19,19 @@ export class ReferralController {
   constructor(private readonly referralService: ReferralService) {}
 
   @Get()
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async findAll() {
     return this.referralService.findAll();
   }
 
-  @Get()
-  @HttpCode(200)
-  async findAllByReferee(refereeId: string) {
+  @Get(':refereeId')
+  @HttpCode(HttpStatus.OK)
+  async findAllByReferee(@Param('referralId') refereeId: string) {
     return this.referralService.findAllByReferee(refereeId);
   }
 
   @Get(':id')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async findOne(@Param('id') id: string) {
     const referral = await this.referralService.findOne(id);
     if (!referral) {
@@ -40,7 +41,7 @@ export class ReferralController {
   }
 
   @Get(':reference')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async findOneByReference(@Param('reference') reference: string) {
     const referral = await this.referralService.findOneByReference(reference);
     if (!referral) {
@@ -52,13 +53,13 @@ export class ReferralController {
   }
 
   @Post()
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createReferralDto: CreateReferralDto) {
     return this.referralService.create(createReferralDto);
   }
 
   @Put(':id')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
     @Body() updateReferralDto: UpdateReferralDto,
@@ -74,7 +75,7 @@ export class ReferralController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string) {
     const isDeleted = await this.referralService.delete(id);
     if (!isDeleted) {

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Comment } from 'src/referral/entity/comment.entity';
 import { ReferralDetails } from 'src/referral/entity/referral-details.entity';
 import { Referral } from 'src/referral/entity/referral.entity';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
+import { Comment } from 'src/comment/entity/comment.entity';
 
 @Module({
   imports: [
