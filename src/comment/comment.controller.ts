@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   Post,
@@ -18,13 +19,13 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Get(':referralId')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async findAllByReferral(@Param('referralId') referralId: string) {
     return this.commentService.findAllByReferral(referralId);
   }
 
   @Get(':commentId')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async findOne(@Param('commentId') commentId: string) {
     const comment = await this.commentService.findOne(commentId);
     if (!comment) {
@@ -34,13 +35,13 @@ export class CommentController {
   }
 
   @Post()
-  @HttpCode(201)
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createCommentDto: CreateCommentDto) {
     return this.commentService.create(createCommentDto);
   }
 
   @Put(':commentId')
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async update(
     @Param('commentId') commentId: string,
     @Body() updateCommentDto: UpdateCommentDto,
@@ -56,7 +57,7 @@ export class CommentController {
   }
 
   @Delete(':commentId')
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('commentId') commentId: string) {
     const isDeleted = await this.commentService.delete(commentId);
     if (!isDeleted) {

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommentController } from './comment.controller';
 
-describe('CommentsController', () => {
+describe('CommentController', () => {
   let controller: CommentController;
 
   beforeEach(async () => {
